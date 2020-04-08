@@ -1,0 +1,3 @@
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple
+Collecting tensorflow-gpu
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/8b/dc/922125284fb70d5ac17a3c3be87d8f1d95908bb5067977e7813bf7b7f712/tensorflow_gpu-1.14.0-cp35-cp35m-manylinux1_x86_64.whl (377.0MB)
