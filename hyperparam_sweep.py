@@ -4,11 +4,11 @@ class VG(VariantGenerator):
   
     @variant
     def seed(self):
-        return [0]
+        return [2]
 
     @variant
     def fast_batch_size(self):
-        return [3]
+        return [1]
         #performance is better with 50
     @variant
     def fast_learning_rate(self):

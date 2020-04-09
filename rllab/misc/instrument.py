@@ -1223,12 +1223,14 @@ def concretize(maybe_stub):
         attr_val = getattr(obj, attr_name)
         return concretize(attr_val)
     elif isinstance(maybe_stub, StubObject):
+        #print(hasattr(maybe_stub, "__stub_cache"))
         if not hasattr(maybe_stub, "__stub_cache"):
             args = concretize(maybe_stub.args)
             kwargs = concretize(maybe_stub.kwargs)
             try:
                 maybe_stub.__stub_cache = maybe_stub.proxy_class(
                     *args, **kwargs)
+                print(maybe_stub.__stub_cache)
             except Exception as e:
                 print(("Error while instantiating %s" % maybe_stub.proxy_class))
                 import traceback

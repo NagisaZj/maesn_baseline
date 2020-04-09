@@ -14,6 +14,8 @@ from rllab.envs.mujoco.wheeled_robot import WheeledEnv
 from rllab.envs.mujoco.pusher import PusherEnv
 from rllab.envs.mujoco.ant_env_rand_goal_ring import AntEnvRandGoalRing
 from rllab.envs.mujoco.point import SparsePointEnv
+from rllab.envs.mujoco.reacher import ReacherGoalEnv_sparse
+from rllab.envs.mujoco.walker_params import Walker2DRandParamsEnv
 
 mode = 'local_docker'
 mode='local'
@@ -24,7 +26,7 @@ parser.add_argument('--env', type=str,
                     help='currently supported envs are Pusher, Wheeled and Ant')
 args = parser.parse_args()
 assert args.algo in ['Maesn' , 'LSBaseline']
-assert args.env in ['Ant' , 'Pusher', 'Wheeled','Point']
+#assert args.env in ['Ant' , 'Pusher', 'Wheeled','Point']
 
 variants = VG().variants()
 print(variants)
@@ -51,6 +53,14 @@ for v in variants:
         env = TfEnv(normalize(SparsePointEnv()))
         print(type(env))
         max_path_length = 32
+    elif args.env=='Reacher':
+        env = TfEnv(normalize(ReacherGoalEnv_sparse()))
+        print(type(env))
+        max_path_length = 64
+    elif args.env == 'Walker-params':
+        env = TfEnv(normalize(Walker2DRandParamsEnv()))
+        print(type(env))
+        max_path_length = 64
 
     else:
         raise AssertionError('Not Implemented')
