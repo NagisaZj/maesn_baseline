@@ -4,7 +4,7 @@ class VG(VariantGenerator):
   
     @variant
     def seed(self):
-        return [1]
+        return [0]
 
     @variant
     def fast_batch_size(self):

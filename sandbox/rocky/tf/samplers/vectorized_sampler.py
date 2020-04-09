@@ -78,6 +78,7 @@ class VectorizedSampler(BaseSampler):
 
         while n_samples < self.algo.batch_size:
             t = time.time()
+            #print(obses.shape,task_idxs.shape,curr_noises[0].shape)
             policy.reset(dones) #TODO: What the hell does this do?
             actions, agent_infos = policy.get_actions(obses, task_idxs, curr_noises)
 

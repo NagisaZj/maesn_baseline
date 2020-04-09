@@ -2,6 +2,7 @@ import numpy as np
 from rllab import spaces
 from gym import Env
 from rllab.core.serializable import Serializable
+from rllab.envs.base import Step
 
 class PointEnv(Env):
     """
@@ -39,7 +40,7 @@ class PointEnv(Env):
     def reset_task(self, idx):
         ''' reset goal AND reset the agent '''
         self._goal = self.goals[idx]
-        self.reset()
+        return self.reset_model()
 
     def get_all_task_idx(self):
         return range(len(self.goals))
@@ -50,7 +51,9 @@ class PointEnv(Env):
         return self._get_obs()
 
     def reset(self, init_state=None, reset_args=None, **kwargs):
-        return self.reset_model()
+        #print(reset_args)
+        #return self.reset_model()
+        return self.reset_task(reset_args)
 
     def _get_obs(self):
         return np.copy(self._state)
@@ -62,8 +65,9 @@ class PointEnv(Env):
         y -= self._goal[1]
         reward = - (x ** 2 + y ** 2) ** 0.5
         done = False
-        ob = self._get_obs()
-        return ob, reward, done, dict()
+        ob = self._get_obs().reshape(-1)
+        return Step(ob, float(reward), done)
+
 
     def viewer_setup(self):
         print('no viewer')
@@ -112,18 +116,21 @@ class SparsePointEnv(PointEnv,Serializable):
         return r
 
     def reset_model(self):
-        self._state = np.array([0, 0])
+        self._state = np.array([0, 0]).reshape(-1)
         return self._get_obs()
 
     def step(self, action):
         ob, reward, done, d = super().step(action)
-        sparse_reward = self.sparsify_rewards(reward)
+        ob=ob.reshape(-1)
+        #sparse_reward = self.sparsify_rewards(reward)
         # make sparse rewards positive
         if reward >= -self.goal_radius:
-            sparse_reward += 1
+            sparse_reward = reward + 1
+        else:
+            sparse_reward = 0
         d.update({'sparse_reward': sparse_reward})
         reward = sparse_reward
-        return ob, reward, done, d
+        return Step(ob, float(reward), done)
 
     def log_diagnostics(self, paths, prefix=''):
         return
