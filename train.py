@@ -10,18 +10,22 @@ from sandbox.rocky.tf.envs.base import TfEnv
 import argparse
 import tensorflow as tf
 from hyperparam_sweep import VG
-from rllab.envs.mujoco.wheeled_robot import WheeledEnv
-from rllab.envs.mujoco.pusher import PusherEnv
-from rllab.envs.mujoco.ant_env_rand_goal_ring import AntEnvRandGoalRing
+#from rllab.envs.mujoco.wheeled_robot import WheeledEnv
+#from rllab.envs.mujoco.pusher import PusherEnv
+#from rllab.envs.mujoco.ant_env_rand_goal_ring import AntEnvRandGoalRing
 from rllab.envs.mujoco.point import SparsePointEnv
 from rllab.envs.mujoco.reacher import ReacherGoalEnv_sparse
-from rllab.envs.mujoco.walker_params import Walker2DRandParamsEnv
+from rllab.envs.mujoco.walker_params import WalkerRandParamsWrappedEnv
+from rllab.envs.mujoco.cheetah import HalfCheetahVelEnv_sparse
+from rllab.envs.mujoco.ant import AntGoalEnvSparse
+from rllab.envs.mujoco.walker import WalkerEnv_sparse
+from metaworld.benchmarks import ML1
 
 mode = 'local_docker'
 mode='local'
 #mode = 'ec2'
 parser = argparse.ArgumentParser()
-parser.add_argument('algo' , type=str , help = 'Maesn or LSBaseline')
+parser.add_argument('--algo' , type=str , help = 'Maesn or LSBaseline')
 parser.add_argument('--env', type=str,
                     help='currently supported envs are Pusher, Wheeled and Ant')
 args = parser.parse_args()
@@ -44,7 +48,7 @@ for v in variants:
         env = TfEnv( normalize(WheeledEnv()))
         max_path_length = 200
 
-    elif args.env == 'Ant':
+    elif args.env == 'Ant-goal':
         env = TfEnv( normalize(AntEnvRandGoalRing()))
         print(type(env))
         max_path_length = 200
@@ -58,9 +62,29 @@ for v in variants:
         print(type(env))
         max_path_length = 64
     elif args.env == 'Walker-params':
-        env = TfEnv(normalize(Walker2DRandParamsEnv()))
+        env = TfEnv(normalize(WalkerRandParamsWrappedEnv()))
         print(type(env))
         max_path_length = 64
+    elif args.env=='Walker':
+        env = TfEnv(normalize(WalkerEnv_sparse()))
+        print(type(env))
+        max_path_length = 64
+    elif args.env=='Ant':
+        env = TfEnv(normalize(AntGoalEnvSparse()))
+        print(type(env))
+        max_path_length = 64
+    elif args.env == 'Cheetah':
+        env = TfEnv(normalize(HalfCheetahVelEnv_sparse()))
+        print(type(env))
+        max_path_length = 64
+    elif args.env=='Push':
+        env = TfEnv(normalize(ML1.get_train_tasks('push-v1')))
+        max_path_length = 150
+    elif args.env == 'Reach':
+
+        env = TfEnv(normalize(ML1.get_train_tasks('reach-v1')))
+        max_path_length = 150
+
 
     else:
         raise AssertionError('Not Implemented')

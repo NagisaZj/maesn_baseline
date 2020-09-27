@@ -17,7 +17,7 @@ def to_tf_space(space):
     elif isinstance(space, TheanoProduct):
         return Product(list(map(to_tf_space, space.components)))
     else:
-        raise NotImplementedError
+        return Box(low=space.low, high=space.high)
 
 
 class WrappedCls(object):

@@ -8,6 +8,7 @@ import rllab.misc.logger as logger
 import rllab.plotter as plotter
 import tensorflow as tf
 import time
+import pickle
 
 from rllab.algos.base import RLAlgorithm
 from sandbox.rocky.tf.policies.base import Policy
@@ -243,6 +244,8 @@ class BatchMAESNPolopt(RLAlgorithm):
                     params = self.get_itr_snapshot(itr, all_samples_data[-1])  # , **kwargs)
                     if self.store_paths:
                         params["paths"] = all_samples_data[-1]["paths"]
+                    with open('/home/zj/Desktop/maesn_baseline/info.pkl','wb') as f:
+                        pickle.dump(all_samples_data[-1],f,protocol=pickle.HIGHEST_PROTOCOL)
                     logger.save_itr_params(itr, params)
                     logger.log("Saved")
                     logger.record_tabular('Time', time.time() - start_time)

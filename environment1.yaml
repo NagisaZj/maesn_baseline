@@ -15,6 +15,7 @@ dependencies:
   - cycler=0.10.0=py35hc4d5149_0
   - decorator=4.4.0=py_0
   - defusedxml=0.6.0=py_0
+  -
   - entrypoints=0.2.3=py35_2
   - flask=1.1.1=py_0
   - fontconfig=2.11.1=6

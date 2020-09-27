@@ -235,12 +235,12 @@ class BaseSampler(Sampler):
             #logger.record_tabular('AverageDiscountedReturn',
             #                      average_discounted_return)
 
-            for key in path['env_infos']:
+            #for key in path['env_infos']:
 
 
-                info_returns = [sum(path["env_infos"][key]) for path in paths]
-                logger.record_tabular(prefix+'Average'+key, np.mean(info_returns))
-                logger.record_tabular(prefix+'Max'+key, np.max(info_returns))
+            #    info_returns = [sum(path["env_infos"][key]) for path in paths]
+            #    logger.record_tabular(prefix+'Average'+key, np.mean(info_returns))
+            #    logger.record_tabular(prefix+'Max'+key, np.max(info_returns))
 
 
 
