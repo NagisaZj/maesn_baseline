@@ -264,6 +264,20 @@ class BatchMAESNPolopt(RLAlgorithm):
         plt.xlim(0,1)
         plt.ylim(-0.5,0.5)
         plt.savefig("/home/russellm/Plots/"+visitationFolder+"/"+visitationFile+".png")
+
+    def plotVisitationsFunc2(self, paths, visitationFolder, visitationFile):
+        for task in range(self.meta_batch_size):
+            for traj in range(self.num_trajs):
+                np.save("/home/zj/Desktop/maesn_baseline/data/local/Maesn-Point/%d-%d.npy"%(task,traj))
+        '''plt.clf()
+        for task in range(self.meta_batch_size):
+            for traj in range(self.num_trajs):
+                x = paths[task][traj]["observations"][:,0]
+                y = paths[task][traj]["observations"][:,1]
+                plt.plot(x,y)
+        plt.xlim(0,1)
+        plt.ylim(-0.5,0.5)
+        plt.savefig("/home/russellm/Plots/"+visitationFolder+"/"+visitationFile+".png")'''
     
     def log_diagnostics(self, paths, prefix):
         self.env.log_diagnostics(paths, prefix)

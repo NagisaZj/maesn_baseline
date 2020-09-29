@@ -30,6 +30,7 @@ class ReacherGoalEnv_sparse(ReacherEnv_,Serializable):
         return range(len(self.goals))
 
     def step(self, action):
+        #action = np.clip(action, -0.1, 0.1)
         tmp_finger = self.get_body_com("fingertip")
         vec = self.get_body_com("fingertip") - self._goal
 

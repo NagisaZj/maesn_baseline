@@ -350,7 +350,7 @@ def run_experiment_lite(
         aws_config=None,
         env=None,
         variant=None,
-        use_gpu=False,
+        use_gpu=True,
         sync_s3_pkl=False,
         sync_log_on_termination=True,
         confirm_remote=True,

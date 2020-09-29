@@ -87,6 +87,7 @@ class HalfCheetahVelEnv_sparse(HalfCheetahEnv,Serializable):
         super(HalfCheetahVelEnv_sparse, self).__init__()
 
     def step(self, action):
+        action = np.clip(action,-1,1)
         xposbefore = self.sim.data.qpos[0]
         self.do_simulation(action, self.frame_skip)
         xposafter = self.sim.data.qpos[0]

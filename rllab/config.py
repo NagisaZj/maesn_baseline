@@ -5,7 +5,7 @@ PROJECT_PATH = osp.abspath(osp.join(osp.dirname(__file__), '..'))
 
 LOG_DIR = PROJECT_PATH + "/data"
 
-USE_TF = False
+USE_TF = True
 
 DOCKER_IMAGE = "DOCKER_IMAGE"
 
@@ -58,7 +58,7 @@ FAST_CODE_SYNC_IGNORES = [".git", "data", ".pods"]
 
 KUBE_DEFAULT_RESOURCES = {
     "requests": {
-        "cpu": 0.8,
+        "cpu": 3,
     }
 }
 

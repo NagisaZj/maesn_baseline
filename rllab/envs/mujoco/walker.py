@@ -93,6 +93,7 @@ class WalkerEnv_sparse(WalkerVelEnv,Serializable):
         return np.random.choice(np.array(range(100)), num_goals)
 
     def step(self, action):
+        action = np.clip(action, -1, 1)
         xposbefore = self.sim.data.qpos[0]
         self.do_simulation(action, self.frame_skip)
         xposafter = self.sim.data.qpos[0]

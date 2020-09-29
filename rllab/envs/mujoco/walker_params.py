@@ -8,6 +8,23 @@ class WalkerRandParamsWrappedEnv(Walker2DRandParamsEnv):
         self.tasks = self.sample_tasks(n_tasks)
         self.reset_task(0)
 
+    def _step(self, a):
+        posbefore = self.model.data.qpos[0, 0]
+        self.do_simulation(a, self.frame_skip)
+        posafter, height, ang = self.model.data.qpos[0:3, 0]
+        alive_bonus = 0.0
+        reward = ((posafter - posbefore) / self.dt)
+        dist = abs(reward - 1.5)
+        if dist > 0.5:
+            reward = 0
+        else:
+            reward = 0.8 - dist
+        reward += alive_bonus
+        reward -= 1e-3 * np.square(a).sum()
+        done = False
+        ob = self._get_obs()
+        return ob, reward, done, {}
+
     def get_all_task_idx(self):
         return range(len(self.tasks))
 
